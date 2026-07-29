@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="gu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRIMARK - T-Shirts, Shirts & Sliders Collection</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #222;
+        }
+
+        /* Top Sub Header */
+        .top-sub-header {
+            background: #fff;
+            padding: 8px 4%;
+            font-size: 11px;
+            color: #555;
+            display: flex;
+            justify-content: flex-end;
+            gap: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .top-sub-header a {
+            color: #555;
+            text-decoration: none;
+        }
+
+        /* Main Header */
+        .main-header {
+            background: #fff;
+            padding: 15px 4%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-logo {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: 4px;
+            color: #0088cc;
+            text-transform: uppercase;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .search-container {
+            position: relative;
+        }
+
+        .search-container input {
+            padding: 8px 35px 8px 15px;
+            border-radius: 20px;
+            border: 1px solid #ccc;
+            outline: none;
+            width: 240px;
+            font-size: 13px;
+        }
+
+        .search-container i {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
+
+        .action-icon {
+            font-size: 18px;
+            color: #333;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -6px;
+            right: -8px;
+            background: #e63946;
+            color: white;
+            font-size: 10px;
+            border-radius: 50%;
+            padding: 2px 5px;
+            font-weight: bold;
+        }
+
+        /* Category Nav */
+        .category-nav {
+            background: #fff;
+            border-top: 1px solid #f0f0f0;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 12px 0;
+            flex-wrap: wrap;
+        }
+
+        .category-nav a {
+            text-decoration: none;
+            color: #111;
+            font-weight: 700;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+        }
+
+        .category-nav a:hover,
+        .category-nav a.active {
+            color: #0088cc;
+        }
+
+        /* HERO SLIDER WITH HD BANNERS */
+        .hero-slider-container {
+            position: relative;
+            width: 100%;
+            height: 420px;
+            overflow: hidden;
+            background: #111;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.55);
+        }
+
+        .slide-overlay {
+            position: absolute;
+            text-align: center;
+            color: white;
+            z-index: 2;
+        }
+
+        .slide-overlay h1 {
+            font-size: 46px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+        }
+
+        .slide-overlay p {
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .oval-buttons-bar {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 3;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 90%;
+        }
+
+        .oval-btn {
+            background: rgba(255, 255, 255, 0.95);
+            color: #111;
+            padding: 10px 24px;
+            border-radius: 30px;
+            border: none;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .oval-btn:hover {
+            background: #0088cc;
+            color: white;
+        }
+
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.4);
+            color: #111;
+            border: none;
+            padding: 12px 16px;
+            cursor: pointer;
+            font-size: 20px;
+            border-radius: 50%;
+            z-index: 4;
+            transition: 0.3s;
+        }
+
+        .slider-arrow:hover {
+            background: #0088cc;
+            color: white;
+        }
+
+        .arrow-left {
+            left: 20px;
+        }
+
+        .arrow-right {
+            right: 20px;
+        }
+
+        /* Product Grid */
+        .products-container {
+            max-width: 1250px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .section-header h2 {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .brand-badge {
+            position: absolute;
+            top: 22px;
+            left: 22px;
+            background: #0088cc;
+            color: #fff;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 8px;
+            z-index: 2;
+        }
+
+        .img-container {
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .product-card:hover img {
+            transform: scale(1.08);
+        }
+
+        .category-text {
+            font-size: 11px;
+            color: #888;
+            text-transform: uppercase;
+        }
+
+        .product-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #222;
+            margin: 5px 0;
+            height: 38px;
+            overflow: hidden;
+        }
+
+        .price-text {
+            font-size: 16px;
+            font-weight: 800;
+            color: #0088cc;
+            margin-top: 5px;
+        }
+
+        .add-btn {
+            width: 100%;
+            margin-top: 10px;
+            padding: 9px;
+            background: #111;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .add-btn:hover {
+            background: #0088cc;
+        }
+
+        /* MODAL POPUP */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: #fff;
+            width: 100%;
+            max-width: 900px;
+            max-height: 90vh;
+            border-radius: 16px;
+            overflow-y: auto;
+            position: relative;
+            padding: 30px;
+        }
+
+        .close-modal-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .detail-view {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .detail-img img {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        .related-section {
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+            gap: 15px;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #0088cc;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            display: none;
+            z-index: 3000;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="top-sub-header">
+        <a href="#">Corporate Website</a>
+        <a href="#">Inspiration</a>
+        <a href="#">Gift Cards</a>
+    </div>
+
+    <!-- MAIN HEADER -->
+    <header class="main-header">
+        <div class="brand-logo">PRIMARK</div>
+        <div class="header-actions">
+            <div class="search-container">
+                <input type="text" id="searchInput" onkeyup="filterProducts()"
+                    placeholder="Search T-shirt, Shirt, Slider...">
+                <i class="fas fa-search"></i>
+            </div>
+            <i class="fas fa-shopping-bag action-icon">
+                <span class="cart-badge" id="cartCount">0</span>
+            </i>
+        </div>
+    </header>
+
+    <!-- CATEGORY NAV -->
+    <nav class="category-nav">
+        <a onclick="selectCategory('all')" class="active" id="nav-all">ALL PRODUCTS</a>
+        <a onclick="selectCategory('men')" id="nav-men">MEN</a>
+        <a onclick="selectCategory('women')" id="nav-women">WOMEN</a>
+        <a onclick="selectCategory('tshirt')" id="nav-tshirt">T-SHIRTS</a>
+        <a onclick="selectCategory('shirt')" id="nav-shirt">SHIRTS</a>
+        <a onclick="selectCategory('slider')" id="nav-slider">SLIDER CHAPPAL</a>
+    </nav>
+
+    <!-- HERO SLIDER WITH BRAND NEW HD PHOTOS -->
+    <section class="hero-slider-container">
+        <!-- Slide 1: Premium Urban Fashion -->
+        <div class="slide active">
+            <img src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=1600" alt="Urban Fashion Banner">
+            <div class="slide-overlay">
+                <h1>NEW SEASON ARRIVALS</h1>
+                <p>Discover Top International Clothes & Footwear</p>
+            </div>
+        </div>
+        <!-- Slide 2: Luxury Shirts & T-Shirts -->
+        <div class="slide">
+            <img src="https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=1600"
+                alt="Apparel Collection Banner">
+            <div class="slide-overlay">
+                <h1>BRANDED T-SHIRTS & SHIRTS</h1>
+                <p>U.S. Polo, Lacoste, Tommy Hilfiger, Gucci & BOSS</p>
+            </div>
+        </div>
+        <!-- Slide 3: Trendy Footwear & Sliders -->
+        <div class="slide">
+            <img src="https://images.unsplash.com/photo-1552346154-21d32810aba3?w=1600" alt="Footwear Banner">
+            <div class="slide-overlay">
+                <h1>STYLISH SLIDERS & SHOES</h1>
+                <p>Nike, Puma, Adidas & Crocs Comfort Wear</p>
+            </div>
+        </div>
+
+        <button class="slider-arrow arrow-left" onclick="changeSlide(-1)">&#10094;</button>
+        <button class="slider-arrow arrow-right" onclick="changeSlide(1)">&#10095;</button>
+
+        <div class="oval-buttons-bar">
+            <button class="oval-btn" onclick="selectCategory('tshirt')">T-Shirts</button>
+            <button class="oval-btn" onclick="selectCategory('shirt')">Shirts</button>
+            <button class="oval-btn" onclick="selectCategory('slider')">Slider Chappals</button>
+            <button class="oval-btn" onclick="selectCategory('men')">Men's Collection</button>
+            <button class="oval-btn" onclick="selectCategory('women')">Women's Collection</button>
+        </div>
+    </section>
+
+    <!-- PRODUCTS GRID -->
+    <div class="products-container">
+        <div class="section-header">
+            <h2 id="sectionTitle">Featured Products</h2>
+        </div>
+        <div class="product-grid" id="productGrid"></div>
+    </div>
+
+    <!-- MODAL POPUP -->
+    <div class="modal-overlay" id="productModal">
+        <div class="modal-content">
+            <span class="close-modal-btn" onclick="closeModal()">&times;</span>
+
+            <div class="detail-view">
+                <div class="detail-img">
+                    <img id="modalImg" src="" alt="Product">
+                </div>
+                <div class="detail-info">
+                    <div style="color: #0088cc; font-weight: bold;" id="modalBrand">BRAND</div>
+                    <h2 id="modalTitle" style="font-size: 22px; margin: 10px 0;">Product Title</h2>
+                    <div style="font-size: 22px; font-weight: 800; color: #111; margin-bottom: 15px;" id="modalPrice">₹0
+                    </div>
+                    <p style="color: #666; font-size: 14px; margin-bottom: 20px;">ઓરિજિનલ બ્રાન્ડેડ કલેક્શન, સુપર સોફ્ટ
+                        ફેબ્રિક અને આરામદાયક ફિટિંગ.</p>
+                    <button class="add-btn" style="padding: 12px;" id="modalAddBtn">ADD TO CART</button>
+                </div>
+            </div>
+
+            <div class="related-section">
+                <h3 style="font-size: 18px; margin-bottom: 15px;">તેના જેવી જ બીજી પ્રોડક્ટ્સ (Related Products)</h3>
+                <div class="related-grid" id="relatedGrid"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">Added to cart!</div>
+
+    <script>
+        // Automatic Slider Script
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === index) slide.classList.add('active');
+            });
+        }
+
+        function changeSlide(direction) {
+            currentSlide = (currentSlide + direction + slides.length) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        setInterval(() => { changeSlide(1); }, 3500);
+
+        // Products Array
+        const allProducts = [
+            // --- T-SHIRTS ---
+            { id: 1, name: "U.S. Polo Assn. Classic Cotton Polo T-Shirt", brand: "U.S. POLO", gender: "men", category: "tshirt", price: 2199, img: "https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=500" },
+            { id: 2, name: "Tommy Hilfiger Logo Print Crew-Neck T-Shirt", brand: "TOMMY HILFIGER", gender: "men", category: "tshirt", price: 2999, img: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500" },
+            { id: 3, name: "Gucci Oversized Printed Cotton T-Shirt", brand: "GUCCI", gender: "women", category: "tshirt", price: 38000, img: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=500" },
+            { id: 4, name: "Levi's Women Graphic Logo Casual T-Shirt", brand: "LEVI'S", gender: "women", category: "tshirt", price: 1499, img: "https://images.unsplash.com/photo-1554568218-0f1715e72254?w=500" },
+
+            // --- SHIRTS ---
+            { id: 5, name: "Lacoste Slim Fit Casual Checkered Shirt", brand: "LACOSTE", gender: "men", category: "shirt", price: 6999, img: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=500" },
+            { id: 6, name: "BOSS Formal Executive White Shirt", brand: "BOSS", gender: "men", category: "shirt", price: 12999, img: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=500" },
+            { id: 7, name: "H&M Women Silk Blend Oversized Shirt", brand: "H&M", gender: "women", category: "shirt", price: 2499, img: "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=500" },
+            { id: 8, name: "Dior Designer Printed Silk Shirt", brand: "DIOR", gender: "women", category: "shirt", price: 55000, img: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=500" },
+
+            // --- SLIDER CHAPPALS ---
+            { id: 9, name: "Nike Offcourt Comfort Men Slider Chappal", brand: "NIKE", gender: "men", category: "slider", price: 2295, img: "https://images.unsplash.com/photo-1603808033192-082d6919d3e1?w=500" },
+            { id: 10, name: "Puma Leadcat Soft Comfort Slider Slide", brand: "PUMA", gender: "men", category: "slider", price: 1799, img: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=500" },
+            { id: 11, name: "Adidas Women Adilette Soft Slider Chappal", brand: "ADIDAS", gender: "women", category: "slider", price: 2499, img: "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=500" },
+            { id: 12, name: "Crocs Classic Unisex Water Resistant Slider", brand: "CROCS", gender: "women", category: "slider", price: 1995, img: "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?w=500" }
+        ];
+
+        let cartCount = 0;
+
+        function renderGrid(products) {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = '';
+
+            if (products.length === 0) {
+                grid.innerHTML = `<h3 style="grid-column: 1/-1; text-align: center; color: #777; padding: 40px;">કોઈ પ્રોડક્ટ મળી નથી.</h3>`;
+                return;
+            }
+
+            products.forEach(item => {
+                grid.innerHTML += `
+                    <div class="product-card" onclick="openProductDetail(${item.id})">
+                        <span class="brand-badge">${item.brand}</span>
+                        <div class="img-container">
+                            <img src="${item.img}" alt="${item.name}">
+                        </div>
+                        <div class="product-info">
+                            <span class="category-text">${item.gender} - ${item.category}</span>
+                            <h3 class="product-title">${item.name}</h3>
+                            <div class="price-text">₹${item.price.toLocaleString('en-IN')}</div>
+                            <button class="add-btn" onclick="event.stopPropagation(); addToCart('${item.name}')">ADD TO CART</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function openProductDetail(id) {
+            const current = allProducts.find(p => p.id === id);
+
+            document.getElementById('modalImg').src = current.img;
+            document.getElementById('modalBrand').innerText = current.brand;
+            document.getElementById('modalTitle').innerText = current.name;
+            document.getElementById('modalPrice').innerText = "₹" + current.price.toLocaleString('en-IN');
+            document.getElementById('modalAddBtn').onclick = () => addToCart(current.name);
+
+            const related = allProducts.filter(p => p.id !== current.id && (p.category === current.category || p.gender === current.gender));
+
+            const relatedGrid = document.getElementById('relatedGrid');
+            relatedGrid.innerHTML = '';
+
+            related.forEach(item => {
+                relatedGrid.innerHTML += `
+                    <div class="product-card" onclick="openProductDetail(${item.id})">
+                        <div class="img-container" style="height: 110px;">
+                            <img src="${item.img}" alt="${item.name}">
+                        </div>
+                        <div class="product-info">
+                            <h4 style="font-size: 11px; height: 28px; overflow:hidden;">${item.name}</h4>
+                            <div class="price-text" style="font-size:12px;">₹${item.price.toLocaleString('en-IN')}</div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('productModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('productModal').style.display = 'none';
+        }
+
+        function selectCategory(category) {
+            document.querySelectorAll('.category-nav a').forEach(a => a.classList.remove('active'));
+            const btn = document.getElementById('nav-' + category);
+            if (btn) btn.classList.add('active');
+
+            document.getElementById('sectionTitle').innerText = category.toUpperCase() + " COLLECTION";
+
+            if (category === 'all') {
+                renderGrid(allProducts);
+            } else {
+                const filtered = allProducts.filter(p => p.gender === category || p.category === category);
+                renderGrid(filtered);
+            }
+        }
+
+        function filterProducts() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = allProducts.filter(p =>
+                p.name.toLowerCase().includes(query) ||
+                p.brand.toLowerCase().includes(query) ||
+                p.category.toLowerCase().includes(query)
+            );
+            renderGrid(filtered);
+        }
+
+        function addToCart(name) {
+            cartCount++;
+            document.getElementById('cartCount').innerText = cartCount;
+
+            const toast = document.getElementById('toast');
+            toast.innerText = `"${name}" કાર્ટમાં ઉમેરાઈ ગયું!`;
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 2000);
+        }
+
+        window.onload = () => { renderGrid(allProducts); };
+    </script>
+</body>
+
+</html>
